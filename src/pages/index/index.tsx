@@ -1,5 +1,5 @@
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Text, Image, MovableArea, MovableView } from '@tarojs/components'
+import { View, Image, MovableArea, MovableView } from '@tarojs/components'
 import { getTopStories } from '@/actions/news'
 
 import './index.less'
@@ -11,7 +11,6 @@ interface Index {
     cardList: any[]
     x: number
     y: number
-    animation: boolean
   }
 }
 
@@ -22,12 +21,13 @@ class Index extends Component {
   data = {
     x: 0,
     y: 0,
-    animation: true,
     curCard: {},
     bgCard: {},
     cardList: []
   }
   validX = 100
+  x = 0
+  y = 0
   constructor(props) {
     super(props)
     this.state = this.data
@@ -46,68 +46,52 @@ class Index extends Component {
       })
     })
   }
-  bindChange(e) {
+  handleChange(e) {
     const { x, y } = e.detail
-    console.log('change call')
-    this.setState({
-      x,
-      y
-    })
+    this.x = x
+    this.y = y
   }
-  bindTouchEnd() {
-    let { x, bgCard, cardList } = this.state
-    if(Math.abs(x) < this.validX) {
-      this.setState({
-        x: 0,
-        y: 0
-      })
-      return
-    }
-    if (x > 0) {
-      // 收藏
-      this.setState({
-        x: 500,
-        y: 0
-      })
-    } else {
-      // 忽略
-      this.setState({
-        x: -500,
-        y: 0
-      })
-    }
-    const nextTimeout = setTimeout(() => {
-      // getNext
-      const curCard = bgCard
-      bgCard = cardList.pop()
-      this.setState({
-        animation: false,
-        curCard,
-        bgCard,
-        cardList
-      }, () => {
+  handleTouchEnd() {
+    const x = this.x
+    this.setState({
+      x: this.x,
+      y: this.y
+    }, () => {
+      if(Math.abs(x) < this.validX) {
         this.setState({
           x: 0,
           y: 0
         })
-        clearTimeout(nextTimeout)
-      })
-    }, 800)
+        return
+      }
+      if (x > 0) {
+        // 收藏
+        this.setState({
+          x: 500,
+          y: 0
+        })
+      } else {
+        // 忽略
+        this.setState({
+          x: -500,
+          y: 0
+        })
+      }
+    })
   }
   render () {
-    const { curCard, bgCard, x, y, animation } = this.state
+    const { curCard, bgCard, x, y } = this.state
     return (
       <View className="page-view-outer">
         <MovableArea className="movable-area">
           <MovableView
             className="cur-card-container"
             direction="all"
-            outOfBounds={true}
             x={x}
             y={y}
-            animation={animation}
-            onTouchEnd={this.bindTouchEnd.bind(this)}
-            onChange={this.bindChange.bind(this)}
+            damping={50}
+            onTouchEnd={this.handleTouchEnd.bind(this)}
+            onChange={this.handleChange.bind(this)}
           >
             <Image mode="aspectFill" className="card-image" src={curCard.image}></Image>
           </MovableView>
