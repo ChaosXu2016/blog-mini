@@ -4,6 +4,7 @@ import RefreshView from '@/components/view/refresh'
 import { windowHeightRpx } from '@/common/system'
 
 import { getUserReceivedEvent } from '@/actions/events'
+import { getRecentStr } from '@/common/date'
 
 import './index.less'
 
@@ -94,7 +95,7 @@ class BlogList extends Component {
                 <View className="actor-view">
                   <Image className="actor-avatar" src={item.actor.avatar_url}></Image>
                   <Text className="actor-name">{item.actor.login}</Text>
-                  <Text className="actor-repo-time">{item.created_at}</Text>
+                  <Text className="actor-repo-time">{getRecentStr(item.created_at)}</Text>
                 </View>
                 <View className="action-view">
                   <Text className="actor-action">{item.payload.action}</Text>
