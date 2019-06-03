@@ -14,7 +14,8 @@ class App extends Component {
   config: Config = {
     pages: [
       'pages/index/index',
-      'pages/blog/list/index'
+      'pages/blog/list/index',
+      'pages/mine/index'
     ],
     window: {
       backgroundColor: '#F4F4F4',
@@ -37,6 +38,11 @@ class App extends Component {
         pagePath: 'pages/blog/list/index',
         iconPath: 'assets/imgs/tab_bar_blog.png',
         selectedIconPath: 'assets/imgs/tab_bar_blog_select.png'
+      }, {
+        text: '个人中心',
+        pagePath: 'pages/mine/index',
+        iconPath: 'assets/imgs/tab_bar_mine.png',
+        selectedIconPath: 'assets/imgs/tab_bar_mine_select.png'
       }]
     }
   }
