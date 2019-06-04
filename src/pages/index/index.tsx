@@ -6,8 +6,6 @@ import './index.less'
 
 interface Index {
   state: {
-    curCard: any
-    bgCard: any
     cardList: any[]
     x: number
     y: number
@@ -21,8 +19,6 @@ class Index extends Component {
   data = {
     x: 0,
     y: 0,
-    curCard: {},
-    bgCard: {},
     cardList: []
   }
   validX = 100
@@ -40,9 +36,11 @@ class Index extends Component {
     .then(res => res.data.top_stories)
     .then(cardList => {
       this.setState({
-        curCard: cardList.pop(),
-        bgCard: cardList.pop(),
-        cardList
+        cardList: cardList.map(item => ({
+          ...item,
+          x: 0,
+          y: 0
+        }))
       })
     })
   }
@@ -51,53 +49,64 @@ class Index extends Component {
     this.x = x
     this.y = y
   }
-  handleTouchEnd() {
+  handleTouchEnd(index) {
     const x = this.x
+    const cardList = [...this.state.cardList]
+    cardList[index].x = this.x
+    cardList[index].y = this.y
     this.setState({
-      x: this.x,
-      y: this.y
+      cardList
     }, () => {
       if(Math.abs(x) < this.validX) {
+        cardList[index].x = 0
+        cardList[index].y = 0
         this.setState({
-          x: 0,
-          y: 0
+          cardList
         })
         return
       }
       if (x > 0) {
         // 收藏
+        cardList[index].x = 500
+        cardList[index].y = 0
         this.setState({
-          x: 500,
-          y: 0
+          cardList
         })
       } else {
         // 忽略
+        cardList[index].x = -500
+        cardList[index].y = 0
         this.setState({
-          x: -500,
-          y: 0
+          cardList
         })
       }
     })
   }
   render () {
-    const { curCard, bgCard, x, y } = this.state
+    const { cardList } = this.state
+    
     return (
       <View className="page-view-outer">
         <MovableArea className="movable-area">
-          <MovableView
-            className="cur-card-container"
-            direction="all"
-            x={x}
-            y={y}
-            damping={50}
-            onTouchEnd={this.handleTouchEnd.bind(this)}
-            onChange={this.handleChange.bind(this)}
-          >
-            <Image mode="aspectFill" className="card-image" src={curCard.image}></Image>
-          </MovableView>
-          <View className="bg-card-container">
+          {
+            cardList.map((item, index) => (
+              <MovableView
+                key={item.id}
+                className="cur-card-container"
+                direction="all"
+                x={item.x}
+                y={item.y}
+                damping={50}
+                onTouchEnd={() => this.handleTouchEnd(index)}
+                onChange={this.handleChange.bind(this)}
+              >
+                <Image mode="aspectFill" className="card-image" src={item.image}></Image>
+              </MovableView>
+            ))
+          }
+          {/* <View className="bg-card-container">
             <Image mode="aspectFill" className="card-image" src={bgCard.image}></Image>
-          </View>
+          </View> */}
         </MovableArea>
       </View>
     )
