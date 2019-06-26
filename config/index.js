@@ -33,6 +33,7 @@ const config = {
   copy: {
     patterns: [
       { from: 'src/assets/', to: 'dist/assets/' },
+      { from: 'src/cloud/', to: 'dist/cloud/' },
     ],
     options: {
     }

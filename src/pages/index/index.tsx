@@ -100,9 +100,13 @@ class Index extends Component {
       })
     })
   }
+  saveFile(item: any) {
+    Taro.setClipboardData({
+      data: item.url
+    })
+  }
   render () {
     const { cardList } = this.state
-    
     return (
       <View className="page-view-outer">
         <MovableArea className="movable-area">
@@ -123,13 +127,16 @@ class Index extends Component {
                 <View className="card-image-view">
                   <Image mode="aspectFill" className="card-image" src={item.url}></Image>
                 </View>
-                <View className="card-bottom-btn">
-                  保存
+                <View className="card-bottom-btn" onClick={() => this.saveFile(item)}>
+                  复制图片地址
                 </View>
               </MovableView>
             ) : null)
           }
         </MovableArea>
+        <View className="background-tips">
+          ～～～文明学交互～～～
+        </View>
       </View>
     )
   }
