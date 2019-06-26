@@ -1,3 +1,5 @@
+@import '../../assets/styles/index';
+
 .notice-window {
   width: 100%;
   height: 60rpx;
@@ -27,5 +29,53 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+}
+.btn-container {
+  padding: 30rpx;
+}
+.mine-container {
+  padding: 30rpx;
+  background: #eee;
+  .ibeacon-item {
+    border-radius: 9rpx;
+    background: #fff;
+    padding: 20rpx;
+    margin-bottom: 16rpx;
+    overflow: hidden;
+    &.hide {
+      animation: hide 4s linear forwards;
+    }
+  }
+  .ibeacon-info-item {
+    padding: 10rpx;
+    box-sizing: border-box;
+  }
+  .ibeacon-info-key {
+    color: @black;
+    opacity: @high-emphasis-opacity;
+    font-size: 24rpx;
+    margin-right: 10rpx;
+  }
+  .ibeacon-info-value {
+    color: @black;
+    opacity: @medium-emphasis-opacity;
+    font-size: 24rpx;
+  }
+}
+
+@keyframes hide {
+  0% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0;
+  }
+  100% {
+    padding-top: 0;
+    padding-bottom: 0;
+    margin: 0;
+    height: 0;
+    opacity: 0;
   }
 }

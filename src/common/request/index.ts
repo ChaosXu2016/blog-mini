@@ -9,7 +9,11 @@ const zhihuRequest = new ApiManager({
   baseURL: 'https://news-at.zhihu.com'
 }, Taro.request)
 
+const gankRequest = new ApiManager({
+  baseURL: 'https://www.vipustutor.com/gankapi'
+}, Taro.request)
 export {
   baseRequest,
-  zhihuRequest
+  zhihuRequest,
+  gankRequest
 }

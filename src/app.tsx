@@ -29,17 +29,17 @@ class App extends Component {
       backgroundColor: '#fff',
       color: '#666666',
       list: [{
-        text: '首页',
+        text: '卡片',
         pagePath: 'pages/index/index',
         iconPath: 'assets/imgs/tab_bar_index.png',
         selectedIconPath: 'assets/imgs/tab_bar_index_select.png'
       }, {
-        text: '博客',
+        text: '刷新',
         pagePath: 'pages/blog/list/index',
         iconPath: 'assets/imgs/tab_bar_blog.png',
         selectedIconPath: 'assets/imgs/tab_bar_blog_select.png'
       }, {
-        text: '个人中心',
+        text: '组件',
         pagePath: 'pages/mine/index',
         iconPath: 'assets/imgs/tab_bar_mine.png',
         selectedIconPath: 'assets/imgs/tab_bar_mine_select.png'
@@ -47,7 +47,8 @@ class App extends Component {
     }
   }
 
-  componentDidMount () {}
+  componentDidMount () {
+  }
 
   componentDidShow () {}
 

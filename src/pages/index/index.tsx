@@ -1,14 +1,13 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Image, MovableArea, MovableView } from '@tarojs/components'
-import { getTopStories } from '@/actions/news'
+import { dataBeauty } from '@/actions/gank'
 
 import './index.less'
 
 interface Index {
   state: {
     cardList: any[]
-    x: number
-    y: number
+    curIndex: number
   }
 }
 
@@ -17,9 +16,8 @@ class Index extends Component {
     navigationBarTitleText: '首页'
   }
   data = {
-    x: 0,
-    y: 0,
-    cardList: []
+    cardList: [],
+    curIndex: 0
   }
   validX = 100
   x = 0
@@ -32,16 +30,37 @@ class Index extends Component {
     this.getList()
   }
   getList() {
-    return getTopStories()
-    .then(res => res.data.top_stories)
+    Taro.showLoading({title: '加载中...'})
+    return dataBeauty()
+    .then(res => res.data.results)
     .then(cardList => {
+      Taro.hideLoading()
       this.setState({
-        cardList: cardList.map(item => ({
-          ...item,
-          x: 0,
-          y: 0
-        }))
+        cardList: this.resolveData(cardList, this.state.curIndex)
       })
+    }).catch(() => {
+      Taro.hideLoading()
+    })
+  }
+  resolveData(cards: any[] = [], curIndex) {
+    return cards.map((item, index) => {
+      const zIndex = cards.length - index
+      let className = 'none'
+      if(curIndex === index) {
+        className = 'current'
+      } else if(curIndex === index + 1) {
+        className = 'previous'
+      } else if(curIndex === index - 1) {
+        className = 'next'
+      } else if(curIndex === index - 2) {
+        className = 'last'
+      }
+      return {
+        ...item,
+        position: item.position || { x: 0, y: 0 },
+        className,
+        zIndex
+      }
     })
   }
   handleChange(e) {
@@ -52,14 +71,15 @@ class Index extends Component {
   handleTouchEnd(index) {
     const x = this.x
     const cardList = [...this.state.cardList]
-    cardList[index].x = this.x
-    cardList[index].y = this.y
+    cardList[index].position.x = this.x
+    cardList[index].position.y = this.y
     this.setState({
       cardList
     }, () => {
-      if(Math.abs(x) < this.validX) {
-        cardList[index].x = 0
-        cardList[index].y = 0
+      const curIndex = this.state.curIndex + 1
+      if(Math.abs(x) < this.validX || curIndex >= this.state.cardList.length) {
+        cardList[index].position.x = 0
+        cardList[index].position.y = 0
         this.setState({
           cardList
         })
@@ -67,19 +87,17 @@ class Index extends Component {
       }
       if (x > 0) {
         // 收藏
-        cardList[index].x = 500
-        cardList[index].y = 0
-        this.setState({
-          cardList
-        })
+        cardList[index].position.x = 500
+        cardList[index].position.y = 0
       } else {
         // 忽略
-        cardList[index].x = -500
-        cardList[index].y = 0
-        this.setState({
-          cardList
-        })
+        cardList[index].position.x = -500
+        cardList[index].position.y = 0
       }
+      this.setState({
+        curIndex,
+        cardList: this.resolveData(cardList, curIndex)
+      })
     })
   }
   render () {
@@ -89,24 +107,28 @@ class Index extends Component {
       <View className="page-view-outer">
         <MovableArea className="movable-area">
           {
-            cardList.map((item, index) => (
+            cardList.map((item, index) => item.className !== 'none' ? (
               <MovableView
-                key={item.id}
-                className="cur-card-container"
+                outOfBounds={true}
+                key={`${item._id}_${index}`}
+                className={`cur-card-container ${item.className}`}
                 direction="all"
-                x={item.x}
-                y={item.y}
+                style={{ zIndex: item.zIndex }}
+                x={item.position.x}
+                y={item.position.y}
                 damping={50}
                 onTouchEnd={() => this.handleTouchEnd(index)}
                 onChange={this.handleChange.bind(this)}
               >
-                <Image mode="aspectFill" className="card-image" src={item.image}></Image>
+                <View className="card-image-view">
+                  <Image mode="aspectFill" className="card-image" src={item.url}></Image>
+                </View>
+                <View className="card-bottom-btn">
+                  保存
+                </View>
               </MovableView>
-            ))
+            ) : null)
           }
-          {/* <View className="bg-card-container">
-            <Image mode="aspectFill" className="card-image" src={bgCard.image}></Image>
-          </View> */}
         </MovableArea>
       </View>
     )
