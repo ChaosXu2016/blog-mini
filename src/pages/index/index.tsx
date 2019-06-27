@@ -105,6 +105,12 @@ class Index extends Component {
       data: item.url
     })
   }
+  previewImg(item) {
+    Taro.previewImage({
+      current: item.url,
+      urls: [item.url]
+    })
+  }
   render () {
     const { cardList } = this.state
     return (
@@ -125,7 +131,7 @@ class Index extends Component {
                 onChange={this.handleChange.bind(this)}
               >
                 <View className="card-image-view">
-                  <Image mode="aspectFill" className="card-image" src={item.url}></Image>
+                  <Image mode="aspectFill" className="card-image" src={item.url} onClick={() => this.previewImg(item)}></Image>
                 </View>
                 <View className="card-bottom-btn" onClick={() => this.saveFile(item)}>
                   复制图片地址
@@ -135,7 +141,8 @@ class Index extends Component {
           }
         </MovableArea>
         <View className="background-tips">
-          ～～～文明学交互～～～
+          <View className="tips-item">～～～文明学交互～～～</View>
+          <View className="tips-item">～～～点击图片预览，长按下载图片～～～</View>
         </View>
       </View>
     )
