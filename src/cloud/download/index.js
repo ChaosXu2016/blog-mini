@@ -1,3 +1,0 @@
-exports.main = (event, context) => {
-  
-}

@@ -1,14 +1,59 @@
 {
-  "miniprogramRoot": "./dist",
-  "projectname": "blog-weapp",
-  "description": "博客测试用的项目",
-  "appid": "wxa3a71d3c19a69dc3",
-  "setting": {
-    "urlCheck": true,
-    "es6": false,
-    "postcss": false,
-    "minified": false
-  },
-  "compileType": "miniprogram",
-  "cloudfunctionRoot": "./cloud"
+	"miniprogramRoot": "client/dist/",
+	"projectname": "blog-weapp",
+	"description": "博客测试用的项目",
+	"appid": "wxa3a71d3c19a69dc3",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"postcss": false,
+		"minified": false
+	},
+	"compileType": "miniprogram",
+	"cloudfunctionRoot": "cloud/",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"miniprogram": {
+			"current": 2,
+			"list": [
+				{
+					"id": -1,
+					"name": "我的",
+					"pathName": "pages/mine/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 1,
+					"name": "sport add",
+					"pathName": "pages/sport/edit/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "sport edit",
+					"pathName": "pages/sport/edit/index",
+					"query": "sportId=2f54b0685d160b1b0286673b0aa3cff9",
+					"scene": null
+				}
+			]
+		}
+	}
 }
