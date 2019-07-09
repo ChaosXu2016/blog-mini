@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 2,
+			"current": 3,
 			"list": [
 				{
 					"id": -1,
@@ -51,6 +51,13 @@
 					"name": "sport edit",
 					"pathName": "pages/sport/edit/index",
 					"query": "sportId=2f54b0685d160b1b0286673b0aa3cff9",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "sport list",
+					"pathName": "pages/sport/list/index",
+					"query": "",
 					"scene": null
 				}
 			]

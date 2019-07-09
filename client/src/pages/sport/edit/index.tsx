@@ -50,6 +50,10 @@ class SportAdd extends Component {
     }
   }
   async handleSubmit() {
+    const { isValid, msg } = this.valid()
+    if(!isValid) {
+      return Taro.showToast({title: msg, icon: 'error'})
+    }
     let res: any = null
     if(!this.sportId) {
       res = await sportAdd(this.state)
@@ -57,7 +61,49 @@ class SportAdd extends Component {
       res = await sportUpdate(this.sportId, this.state)
     }
     Taro.showToast({ title: '提交成功', icon: 'none' })
-    console.log(res)
+    return res
+  }
+  valid() {
+    const { name, value, unit, sleep_time } = this.state
+    if(!name) {
+      return {
+        isValid: false,
+        msg: '请输入项目名！'
+      }
+    }
+    if(!value) {
+      return {
+        isValid: false,
+        msg: '请输入数值！'
+      }
+    } else if(isNaN(+value)) {
+      return {
+        isValid: false,
+        msg: '数值只能为数字！'
+      }
+    }
+    if(!unit) {
+      return {
+        isValid: false,
+        msg: '请选择单位！'
+      }
+    }
+    const sleep_time_reg_exp = /^\d+[h|H|m|M|s|S]$/
+    if(!sleep_time) {
+      return {
+        isValid: false,
+        msg: '请输入间隔时间！'
+      }
+    } else if(!sleep_time_reg_exp.test(sleep_time)) {
+      return {
+        isValid: false,
+        msg: '间隔时间不符合规则！'
+      }
+    }
+    return {
+      isValid: true,
+      msg: '校验成功！'
+    }
   }
   handleInput(key, e) {
     this.setState({
@@ -92,6 +138,7 @@ class SportAdd extends Component {
           <FieldItem
             label="间隔时间"
             explain="数字+单位格式，h|m|s分别表示时分秒，不区分大小写，如：1h"
+            required
           >
             <FieldInput onInput={e => this.handleInput('sleep_time', e)} value={sleep_time} placeholder="请输入"></FieldInput>
           </FieldItem>
