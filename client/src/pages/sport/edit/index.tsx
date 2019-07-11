@@ -3,7 +3,7 @@ import { View, Picker } from '@tarojs/components'
 import CommonButton from '@/components/button'
 import FieldItem from '@/components/fields/item'
 import FieldInput from '@/components/fields/input'
-import { sportAdd, sportUpdate, sportDetail } from '@/actions/sport'
+import { add, update, detail } from '@/actions/sport'
 import './index.less'
 
 interface SportAdd {
@@ -37,7 +37,7 @@ class SportAdd extends Component {
   }
   componentDidMount() {
     if(this.sportId) {
-      sportDetail(this.sportId).then((res: any) => {
+      detail(this.sportId).then((res: any) => {
         this.setState({
           name: res.data.name,
           mark: res.data.mark,
@@ -56,9 +56,9 @@ class SportAdd extends Component {
     }
     let res: any = null
     if(!this.sportId) {
-      res = await sportAdd(this.state)
+      res = await add(this.state)
     } else {
-      res = await sportUpdate(this.sportId, this.state)
+      res = await update(this.sportId, this.state)
     }
     Taro.showToast({ title: '提交成功', icon: 'none' })
     return res

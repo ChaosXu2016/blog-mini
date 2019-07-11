@@ -54,7 +54,7 @@ class App extends Component {
     Taro.getUserInfo().then(res => {
       store.dispatch(setUserInfo(res.userInfo))
     })
-    Taro.login().then(resp => {
+    Taro.login().then(() => {
       Taro.cloud.callFunction({
         name: 'login',
         complete: res => {
