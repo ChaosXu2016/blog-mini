@@ -43,3 +43,5 @@ export const update = (id: string, sport: Sport) => sportDbPromise('update', {id
 export const list = (sport: SportQuery) => sportDbPromise('list', sport)
 
 export const detail = (_id: string) => sportDbPromise('detail', _id)
+
+export const remove = (_id: string) => sportDbPromise('remove', _id)

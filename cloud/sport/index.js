@@ -27,18 +27,23 @@ const list = sport => db.collection('sport').where(sport).get()
 
 const detail = _id => db.collection('sport').doc(_id).get()
 
+const remove = _id => db.collection('sport').doc(_id).remove()
+
 exports.main = async event => {
   const { OPENID } = cloud.getWXContext()
   const { name, data } = event
+  console.log(data)
   switch(name) {
     case 'list':
-      return list({ ...data, _openid: OPENID })
+      return list({ ...data, openid: OPENID })
     case 'add':
-      return add(data)
+      return add({ ...data, openid: OPENID})
     case 'update':
       return update(data)
     case 'detail':
       return detail(data)
+    case 'remove':
+      return remove(data)
     default:
       return Promise.resolve('function not found')
   }

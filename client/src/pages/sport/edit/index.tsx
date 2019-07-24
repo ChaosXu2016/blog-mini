@@ -4,6 +4,7 @@ import CommonButton from '@/components/button'
 import FieldItem from '@/components/fields/item'
 import FieldInput from '@/components/fields/input'
 import { add, update, detail } from '@/actions/sport'
+import { units } from '@/constants/enums'
 import './index.less'
 
 interface SportAdd {
@@ -38,13 +39,14 @@ class SportAdd extends Component {
   componentDidMount() {
     if(this.sportId) {
       detail(this.sportId).then((res: any) => {
+        const sport = res.result.data
         this.setState({
-          name: res.data.name,
-          mark: res.data.mark,
-          value: res.data.value,
-          unit: res.data.unit,
-          group_num: res.data.group_num,
-          sleep_time: res.data.sleep_time
+          name: sport.name,
+          mark: sport.mark,
+          value: sport.value,
+          unit: sport.unit,
+          group_num: sport.group_num,
+          sleep_time: sport.sleep_time
         })
       })
     }
@@ -52,19 +54,21 @@ class SportAdd extends Component {
   async handleSubmit() {
     const { isValid, msg } = this.valid()
     if(!isValid) {
-      return Taro.showToast({title: msg, icon: 'error'})
+      return Taro.showToast({title: msg, icon: 'none' })
     }
+    const { name, mark, value, unit, group_num, sleep_time } = this.state
     let res: any = null
     if(!this.sportId) {
-      res = await add(this.state)
+      res = await add({ name, mark, value, unit, group_num, sleep_time })
     } else {
-      res = await update(this.sportId, this.state)
+      res = await update(this.sportId, { name, mark, value, unit, group_num, sleep_time })
     }
     Taro.showToast({ title: '提交成功', icon: 'none' })
+    Taro.navigateBack()
     return res
   }
   valid() {
-    const { name, value, unit, sleep_time } = this.state
+    const { name, value, sleep_time } = this.state
     if(!name) {
       return {
         isValid: false,
@@ -80,12 +84,6 @@ class SportAdd extends Component {
       return {
         isValid: false,
         msg: '数值只能为数字！'
-      }
-    }
-    if(!unit) {
-      return {
-        isValid: false,
-        msg: '请选择单位！'
       }
     }
     const sleep_time_reg_exp = /^\d+[h|H|m|M|s|S]$/
@@ -112,7 +110,6 @@ class SportAdd extends Component {
   }
   render() {
     const { name, mark, value, unit, group_num, sleep_time } = this.state
-    const range = ['次数', '步数', '时', '分', '秒']
     return (
       <View className="sport-container">
         <View className="field-container">
@@ -126,9 +123,9 @@ class SportAdd extends Component {
             <FieldInput onInput={e => this.handleInput('value', e)} value={`${value}`} placeholder="次数、时间、步数等，只能输入数字" type="number"></FieldInput>
           </FieldItem>
           <FieldItem label="单位" required>
-            <Picker mode="selector" range={range} value={unit} onChange={ e => this.handleInput('unit', e)}>
+            <Picker mode="selector" range={units} value={unit} onChange={ e => this.handleInput('unit', e)}>
               <View className="picker-value">
-                {range[unit]}
+                {units[unit]}
               </View>
             </Picker>
           </FieldItem>
