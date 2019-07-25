@@ -2,7 +2,7 @@ const cloud = require('wx-server-sdk')
 
 cloud.init({ env: 'einfo-wechat-1a2c07' })
 const db = cloud.database({ env: 'einfo-wechat-1a2c07' })
-const collection = 'sport'
+const collection = 'todos'
 
 const add = sport => {
   sport.create_time = new Date()
