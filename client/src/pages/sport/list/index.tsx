@@ -1,4 +1,4 @@
-import Taro,{ Component } from '@tarojs/taro'
+import Taro,{ Component, Config } from '@tarojs/taro'
 import { View, Text, Image } from '@tarojs/components'
 import { units } from '@/constants/enums'
 import FabButton from '@/components/fab'
@@ -15,6 +15,9 @@ interface SportList {
 }
 
 class SportList extends Component {
+  config: Config = {
+    navigationBarTitleText: '运动项目'
+  }
   data = {
     sportArray: []
   }

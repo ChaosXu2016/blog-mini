@@ -3,10 +3,14 @@ import { View, Image, Text, Button } from '@tarojs/components'
 import defaultAvatar from '@/assets/imgs/avatar.png'
 
 import './index.less'
-import { connect } from '@tarojs/redux';
-import { setUserInfo } from '@/actions/userInfo';
+import { connect } from '@tarojs/redux'
+import { setUserInfo } from '@/actions/userInfo'
 import store from '@/store'
 import { gender } from '@/constants/enums'
+import settingSportIcon from '@/assets/imgs/mine/setting/icon_sport.png'
+import settingLearnIcon from '@/assets/imgs/mine/setting/learn_line.png'
+import settingRightArrowIcon from '@/assets/imgs/mine/setting/arrow-right.png'
+import settingScheduleIcon from '@/assets/imgs/mine/setting/schedule.png'
 
 interface Mine {
   props: {
@@ -33,6 +37,17 @@ class Mine extends Component {
     if(e.detail.userInfo) {
       this.props.setUserInfo(e.detail.userInfo)
     }
+  }
+  toSportList() {
+    Taro.navigateTo({
+      url: '/pages/sport/list/index'
+    })
+  }
+  toLearnList() {
+    Taro.showToast({
+      icon: 'none',
+      title: '正在开发'
+    })
   }
   render() {
     const userInfo = this.props.userInfo || {}
@@ -64,8 +79,22 @@ class Mine extends Component {
             生活不能等待别人来安排，要自己去争取和奋斗；而不论其结果是喜是悲，但可以慰藉的是，你总不枉在这世界上活了一场。
           </View>
         </View>
-        <View className="setting-item blog-item">
-          
+        <View className="setting-container">
+          <View className="setting-item touch-able" onClick={this.toSportList.bind(this)}>
+            <Image className="setting-icon" src={settingScheduleIcon}></Image>
+            <Text className="setting-title">每日计划管理</Text>
+            <Image className="right-arrow-icon" src={settingRightArrowIcon}></Image>
+          </View>
+          <View className="setting-item touch-able" onClick={this.toSportList.bind(this)}>
+            <Image className="setting-icon" src={settingSportIcon}></Image>
+            <Text className="setting-title">运动类项目管理</Text>
+            <Image className="right-arrow-icon" src={settingRightArrowIcon}></Image>
+          </View>
+          <View className="setting-item touch-able" onClick={this.toLearnList.bind(this)}>
+            <Image className="setting-icon" src={settingLearnIcon}></Image>
+            <Text className="setting-title">学习类项目管理</Text>
+            <Image className="right-arrow-icon" src={settingRightArrowIcon}></Image>
+          </View>
         </View>
       </View>
     )

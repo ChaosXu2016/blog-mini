@@ -1,24 +1,28 @@
 @import '../../assets/styles/index';
 
+page {
+  background: #eee;
+}
+
 .info-card {
   width: 690rpx;
+  box-sizing: border-box;
   border-radius: 16rpx;
   border: 2rpx solid transparent;
-  box-shadow: 0 0 2px 2px rgba(62, 175, 124, .3);
+  box-shadow: 0 0 2px rgba(62, 175, 124, .3);
   background: #fff;
   margin: 30rpx auto;
   position: relative;
+  padding: 30rpx;
   .base-info-view {
     display: flex;
     align-items: center;
-    padding: 30rpx;
     box-sizing: border-box;
     .avatar-view {
-      width: 120rpx;
-      height: 120rpx;
+      width: 100rpx;
+      height: 100rpx;
       font-size: 0;
       border-radius: 50%;
-      border: 8rpx solid rgba(62, 175, 124, .5);
       overflow: hidden;
       flex-grow: 0;
       flex-shrink: 0;
@@ -49,10 +53,9 @@
     }
   }
   .desc-view {
-    padding: 30rpx;
+    margin-top: 30rpx;
     box-sizing: border-box;
-    border-top: 1px solid @page-bg-color;
-    font-size: 32rpx;
+    font-size: 28rpx;
     color: @sub-title-color;
   }
   .auth-btn-view {
@@ -74,6 +77,37 @@
       bottom: 0;
       left: 0;
       right: 0;
+    }
+  }
+}
+.setting-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  .setting-item {
+    width: 690rpx;
+    background: #fff;
+    box-shadow: 0 2rpx 2rpx 2rpx rgba(0, 0, 0, .1);
+    margin-bottom: 20rpx;
+    display: flex;
+    align-items: center;
+    padding: 40rpx 30rpx;
+    box-sizing: border-box;
+    .setting-icon {
+      width: 60rpx;
+      height: 60rpx;
+      margin-right: 20rpx;
+      flex-shrink: 0;
+    }
+    .setting-title {
+      color: #333;
+      font-size: 32rpx;
+      flex-grow: 1;
+    }
+    .right-arrow-icon {
+      height: 60rpx;
+      width: 60rpx;
+      flex-shrink: 0;
     }
   }
 }
