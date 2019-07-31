@@ -1,5 +1,5 @@
 export default {
-  BOLDER: 'BOLDER',
-  CODE: 'CODE',
-  LINE: 'LINE'
+  BOLDER: 'text-bolder',
+  CODE: 'text-code',
+  LINE: 'text-line'
 }

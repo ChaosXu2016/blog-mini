@@ -2,7 +2,7 @@ import Taro,{ Component } from '@tarojs/taro'
 import { View, Textarea, Text } from '@tarojs/components'
 import CommonButton from '@/components/button'
 import './index.less'
-import parse from './parse'
+import insert from '@/common/simplemd/insert'
 
 interface MdEditor {
   props: {
@@ -30,22 +30,22 @@ class MdEditor extends Component {
     this.props.onGetValue && this.props.onGetValue(this.state.value)
   }
   addH1() {
-    return this.add(parse.h1)
+    return this.add(insert.h1)
   }
   addH2() {
-    return this.add(parse.h2)
+    return this.add(insert.h2)
   }
   addH3() {
-    return this.add(parse.h3)
+    return this.add(insert.h3)
   }
   addH4() {
-    return this.add(parse.h4)
+    return this.add(insert.h4)
   }
   addBolder() {
-    return this.add(parse.bolder)
+    return this.add(insert.bolder)
   }
   addQuote() {
-    return this.add(parse.quote)
+    return this.add(insert.quote)
   }
   add(fn) {
     setTimeout(() => {
@@ -99,9 +99,6 @@ class MdEditor extends Component {
             </View>
             <View className="operate-item title1" onClick={this.addQuote.bind(this)}>
               <Text>Quote</Text>
-            </View>
-            <View className="operate-item title1" onClick={this.addQuote.bind(this)}>
-              <Text>Image</Text>
             </View>
           </View>
           <CommonButton size="full-line" type="primary" onClick={this.getValue.bind(this)}>获取内容</CommonButton>

@@ -1,7 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-// import MdEditor from '@/components/mdeditor'
-import MdReader from '@/components/markdown/reader'
+import MdEditor from '@/components/markdown/editor'
 import { add } from '@/actions/blog'
 
 import './index.less'
@@ -19,8 +18,7 @@ class BlogEdit extends Component {
   render() {
     return (
       <View className="blog-editor">
-        {/* <MdEditor onGetValue={this.handleSubmit.bind(this)}></MdEditor> */}
-        <MdReader></MdReader>
+        <MdEditor onGetValue={this.handleSubmit.bind(this)}></MdEditor>
       </View>
     )
   }

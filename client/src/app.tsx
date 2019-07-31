@@ -17,6 +17,7 @@ class App extends Component {
       'pages/index/index',
       'pages/blog/list/index',
       'pages/blog/edit/index',
+      'pages/blog/detail/index',
       'pages/mine/index',
       'pages/sport/edit/index',
       'pages/sport/list/index'

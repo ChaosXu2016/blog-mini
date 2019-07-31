@@ -1,3 +1,7 @@
+.simple-md-reader {
+  padding: 30rpx;
+  line-height: 1.2;
+}
 .md-text {
   font-size: 32rpx;
   color: #282828;
@@ -11,5 +15,33 @@
     padding: 0 4rpx;
     margin: 0 4rpx;
     font-size: 28rpx;
+  }
+}
+.md-block {
+  padding: 10rpx;
+  &.h1-block .md-text {
+    font-size: 60rpx;
+    color: #282828;
+    font-weight: bolder;
+  }
+  &.h2-block .md-text {
+    font-size: 40rpx;
+    color: #282828;
+    font-weight: bolder;
+  }
+  &.h3-block .md-text {
+    font-size: 36rpx;
+    color: #282828;
+    font-weight: bolder;
+  }
+  &.h4-block .md-text {
+    font-size: 32rpx;
+    color: #282828;
+    font-weight: bolder;
+  }
+  &.quote-block {
+    background: #eee;
+    border-left: 8rpx solid #999;
+    box-sizing: border-box;
   }
 }

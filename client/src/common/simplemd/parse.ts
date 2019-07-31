@@ -9,7 +9,7 @@ function parse(ast: any[]) {
         stack.push(item.style)
       }
     } else if(stack.length){
-      parseResult.push({ style: stack[stack.length - 1], txt: item.text})
+      parseResult.push({ style: stack[stack.length - 1], text: item.text})
     } else {
       parseResult.push(item)
     }
