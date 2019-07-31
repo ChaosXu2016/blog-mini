@@ -1,12 +1,16 @@
 import Taro,{ Component } from '@tarojs/taro'
 import { View, Textarea, Text } from '@tarojs/components'
+import CommonButton from '@/components/button'
 import './index.less'
 import parse from './parse'
 
 interface MdEditor {
+  props: {
+    onGetValue?: any
+  }
   state: {
-    value: string,
-    cursor: number,
+    value: string
+    cursor: number
     focus: boolean
   }
 }
@@ -22,9 +26,9 @@ class MdEditor extends Component {
     super(props)
     this.state = this.data
   }
-  // getValue() {
-  //   const arr = this.state.value.split('\n')
-  // }
+  getValue() {
+    this.props.onGetValue && this.props.onGetValue(this.state.value)
+  }
   addH1() {
     return this.add(parse.h1)
   }
@@ -50,8 +54,6 @@ class MdEditor extends Component {
         value: value, 
         cursor
       }, () => {
-        console.log('cursor', cursor)
-        console.log('this.state.cursor', this.state.cursor)
         this.setState({
           focus: true
         })
@@ -78,32 +80,31 @@ class MdEditor extends Component {
     const { value, cursor, focus } = this.state
     return (
       <View className="md-editor">
-        <View className="operate-panel">
-          <View className="operate-item title1" onClick={this.addH1.bind(this)}>
-            <Text>H1</Text>
+        <View className="operate-container">
+          <View className="operate-panel">
+            <View className="operate-item title1" onClick={this.addH1.bind(this)}>
+              <Text>H1</Text>
+            </View>
+            <View className="operate-item title1" onClick={this.addH2.bind(this)}>
+              <Text>H2</Text>
+            </View>
+            <View className="operate-item title1" onClick={this.addH3.bind(this)}>
+              <Text>H3</Text>
+            </View>
+            <View className="operate-item title1" onClick={this.addH4.bind(this)}>
+              <Text>H4</Text>
+            </View>
+            <View className="operate-item title1" onClick={this.addBolder.bind(this)}>
+              <Text>Bolder</Text>
+            </View>
+            <View className="operate-item title1" onClick={this.addQuote.bind(this)}>
+              <Text>Quote</Text>
+            </View>
+            <View className="operate-item title1" onClick={this.addQuote.bind(this)}>
+              <Text>Image</Text>
+            </View>
           </View>
-          <View className="operate-item title1" onClick={this.addH2.bind(this)}>
-            <Text>H2</Text>
-          </View>
-          <View className="operate-item title1" onClick={this.addH3.bind(this)}>
-            <Text>H3</Text>
-          </View>
-          <View className="operate-item title1" onClick={this.addH4.bind(this)}>
-            <Text>H4</Text>
-          </View>
-          <View className="operate-item title1" onClick={this.addBolder.bind(this)}>
-            <Text>Bolder</Text>
-          </View>
-          <View className="operate-item title1" onClick={this.addQuote.bind(this)}>
-            <Text>Quote</Text>
-          </View>
-          <View className="operate-item title1" onClick={this.addQuote.bind(this)}>
-            <Text>Link</Text>
-          </View>
-          <View className="operate-item title1" onClick={this.addQuote.bind(this)}>
-            <Text>Image</Text>
-          </View>
-          {/* <View className="operate-btn" onClick={this.getValue.bind(this)}>获取内容</View> */}
+          <CommonButton size="full-line" type="primary" onClick={this.getValue.bind(this)}>获取内容</CommonButton>
         </View>
         <Textarea
           className="editor-text-area"
