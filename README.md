@@ -2,84 +2,24 @@
 
 > 平时写写demo，想到什么写什么，当作个人网站移动版吧。比`app`方便。
 
-## 日常任务表
+## 预计功能点
+ - [x] 运动项目管理：管理运动类项目
+ - [ ] 学习项目管理：管理学习类项目
+ - [ ] 计划表管理：管理计划表
+ - [x] 简易的`markdown`编辑器和解析器
+ - [ ] 日记时间线
+ - [ ] 首页用卡片的形式展示待办事项
 
-> 主要是用来管理个人的`to do list`。目前主要是管理学习计划和健身计划。表结构设计如下：  
+## 下阶段计划
 
-### done_log  
++ `markdown`增加快捷面板  
+> 操作的过程中发现很多符号，手机上输入较为困难
 
-> 记录完成情况
++ `markdown`增加上传图片  
+> 更快捷的记录
 
-```json
-{
-  "_id": "主键id",
-  "_openid": "openid",
-  "todo_id": "todo_id",
-  "create_time": "创建日期",
-  "update_time": "更新时间"
-}
-```  
++ 日记时间线  
+> 本来是用普通列表的，后来发现列表看起来太平淡，而且要查看详情还需要点击进去。因此，取消详情页面，采用朋友圈那种展示方式。
 
-### todos  
-
-```json
-{
-  "_id": "主键id",
-  "_openid": "openid",
-  "name": "名称",
-  "mark": "备注",
-  "detail_id": "详情id",
-  "type": "类型；sport|study",
-  "status": "状态：0-无效 1-有效",
-  "start_time": "开始时间",
-  "end_time": "截止日期",
-  "create_time": "创建日期",
-  "update_time": "更新时间"
-}
-```  
-
-### study  
-
-```json
-{
-  "_id": "主键id",
-  "_openid": "openid",
-  "name": "名称",
-  "mark": "备注",
-  "value": "数值",
-  "unit": "单位",
-  "create_time": "创建日期",
-  "update_time": "更新时间"
-}
-```  
-
-### sport  
-
-```json
-{
-  "_id": "主键id",
-  "_openid": "openid",
-  "name": "名称",
-  "mark": "备注",
-  "value": "数值",
-  "unit": "单位",
-  "group_num": "组数",
-  "sleep_time": "间隔时间",
-  "create_time": "创建日期",
-  "update_time": "更新时间"
-}
-```  
-
-### blog
-```json
-{
-  "_id": "主键id",
-  "_openid": "openid",
-  "openid": "openid",
-  "title": "名称",
-  "sub_title": "备注",
-  "content": "数值",
-  "create_time": "创建日期",
-  "update_time": "更新时间"
-}
-```
++ 增加标签
+> 方便更加快捷的查看
