@@ -18,30 +18,47 @@
   }
 }
 .md-block {
-  padding: 10rpx;
-  &.h1-block .md-text {
-    font-size: 60rpx;
-    color: #282828;
-    font-weight: bolder;
+  padding: 10rpx 0;
+  margin-bottom: 10rpx;
+  &.h1-block {
+    padding: 30rpx 0;
+    .md-text {
+      font-size: 60rpx;
+      color: #282828;
+      font-weight: bolder;
+    }
   }
-  &.h2-block .md-text {
-    font-size: 40rpx;
-    color: #282828;
-    font-weight: bolder;
+  &.h2-block {
+    padding: 20rpx 0;
+    .md-text {
+      font-size: 40rpx;
+      color: #282828;
+      font-weight: bolder;
+    }
   }
-  &.h3-block .md-text {
-    font-size: 36rpx;
-    color: #282828;
-    font-weight: bolder;
+  &.h3-block {
+    padding: 18rpx 0;
+    .md-text {
+      font-size: 36rpx;
+      color: #282828;
+      font-weight: bolder;
+    }
   }
-  &.h4-block .md-text {
-    font-size: 32rpx;
-    color: #282828;
-    font-weight: bolder;
+  &.h4-block {
+    padding: 16rpx 0;
+    .md-text {
+      font-size: 32rpx;
+      color: #282828;
+      font-weight: bolder;
+    }
   }
   &.quote-block {
-    background: #eee;
-    border-left: 8rpx solid #999;
+    border-left: 8rpx solid rgba(62, 175, 124, 0.6);
     box-sizing: border-box;
+    padding-left: 20rpx;
+    background: rgba(62, 175, 124, .1);
+    .md-text {
+      color: rgba(0, 0, 0, .6);
+    }
   }
 }

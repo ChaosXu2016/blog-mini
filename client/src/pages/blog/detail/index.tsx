@@ -19,7 +19,7 @@ class BlogDetail extends Component {
     this.state = this.data
   }
   componentDidMount() {
-    detail('face13585d4130fd0740dbb35b16e0c4').then((res: any) => {
+    detail(this.$router.params.id).then((res: any) => {
       const data = res.result.data
       if(data) {
         this.setState({

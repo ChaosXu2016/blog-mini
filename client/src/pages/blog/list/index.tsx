@@ -1,17 +1,13 @@
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Text, Image } from '@tarojs/components'
-import RefreshView from '@/components/view/refresh'
-import { windowHeightRpx } from '@/common/system'
+import { View, Text } from '@tarojs/components'
+import Fab from '@/components/fab'
 
-import { getUserReceivedEvent } from '@/actions/events'
-import { getRecentStr } from '@/common/date'
+import { list, remove } from '@/actions/blog'
 
 import './index.less'
 
 interface BlogList {
   state: {
-    refreshing: boolean
-    hasMore: boolean
     listData: any[]
   }
 }
@@ -19,11 +15,9 @@ interface BlogList {
 class BlogList extends Component {
   config: Config = {
     navigationBarTitleText: '博客列表',
-    disableScroll: true
+    enablePullDownRefresh: true
   }
   data = {
-    refreshing: false,
-    hasMore: true,
     listData: []
   }
   page = 0
@@ -31,80 +25,69 @@ class BlogList extends Component {
     super(props)
     this.state = this.data
   }
-  componentDidMount() {
-    this.handleRefresh()
+  componentDidShow() {
+    this.getBlogList()
   }
-  handleRefresh() {
-    this.setState({
-      refreshing: true,
-      hasMore: true
+  onPullDownRefresh() {
+    this.getBlogList().then(() => {
+      Taro.stopPullDownRefresh()
+    }).catch(() => {
+      Taro.stopPullDownRefresh()
     })
-    getUserReceivedEvent(this.page).then(res => {
+  }
+  getBlogList() {
+    return list({}).then((res: any) => {
       this.setState({
-        refreshing: false
+        listData: res.result.data
       })
-      this.resolveList(res.data, true)
     })
   }
-  resolveList(list, isRefresh = false) {
-    if(list instanceof Array) {
-      if(isRefresh) {
-        this.setState({
-          listData: list
-        })
-      } else {
-        this.setState({
-          listData: [
-            ...this.state.listData,
-            ...list
-          ]
-        })
+  toBlogAdd() {
+    Taro.navigateTo({
+      url: '/pages/blog/edit/index'
+    })
+  }
+  toDetail(id) {
+    Taro.navigateTo({
+      url: `/pages/blog/detail/index?id=${id}`
+    })
+  }
+  delete(id) {
+    Taro.showModal({
+      title: '提示',
+      content: '确认删除该记录？',
+      success: res => {
+        if (res.confirm) {
+          return remove(id).then(() => {
+            Taro.showToast({ icon: 'none', title: '删除成功' })
+            this.getBlogList()
+          })
+        } else {
+          return Promise.reject('取消删除')
+        }
       }
-    } else {
-      this.setState({
-        hasMore: false
-      })
-    }
-  }
-  handleLoadMore() {
-    this.setState({
-      refreshing: true
-    })
-    this.page = this.page + 1
-    getUserReceivedEvent(this.page).then(res => {
-      this.setState({
-        refreshing: false
-      })
-      this.resolveList(res.data, false)
     })
   }
   render() {
     const { listData } = this.state
     return (
       <View>
-        <RefreshView
-          scrollViewHeight={windowHeightRpx}
-          onRefresh={this.handleRefresh.bind(this)}
-          onLoadMore={this.handleLoadMore.bind(this)}
-          refreshing={this.state.refreshing}
-          hasMore={this.state.hasMore}
-        >
-          {
-            listData.map(item => (
-              <View key={item.id} className="event-item">
-                <View className="actor-view">
-                  <Image className="actor-avatar" src={item.actor.avatar_url}></Image>
-                  <Text className="actor-name">{item.actor.login}</Text>
-                  <Text className="actor-repo-time">{getRecentStr(item.created_at)}</Text>
-                </View>
-                <View className="action-view">
-                  <Text className="actor-action">{item.payload.action}</Text>
-                  <Text className="actor-repo-name">{item.repo.name}</Text>
-                </View>
+        {
+          listData.map(item => (
+            <View key={item._id} className="event-item touch-able" onClick={() => this.toDetail(item._id)}>
+              <View className="title-view">
+                <Text className="title-text">{item.title}</Text>
               </View>
-            ))
-          }
-        </RefreshView>
+              <View className="sub-title-view">
+                <Text className="sub-title-text">{item.sub_title}</Text>
+              </View>
+              <View className="operate-view">
+                <Text className="can-click-text" onClick={e => { e.stopPropagation(); this.delete(item._id);}}>删除</Text>
+              </View>
+            </View>
+          ))
+        }
+        <Fab onClick={this.toBlogAdd.bind(this)}></Fab>
       </View>
     )
   }

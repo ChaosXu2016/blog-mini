@@ -1,6 +1,5 @@
 import Taro,{ Component } from '@tarojs/taro'
-import { View, Textarea, Text } from '@tarojs/components'
-import CommonButton from '@/components/button'
+import { View, Textarea } from '@tarojs/components'
 import './index.less'
 import insert from '@/common/simplemd/insert'
 
@@ -76,40 +75,22 @@ class MdEditor extends Component {
       focus: true
     })
   }
+  componentWillUnmount() {
+    this.getValue()
+  }
   render() {
     const { value, cursor, focus } = this.state
     return (
       <View className="md-editor">
-        <View className="operate-container">
-          <View className="operate-panel">
-            <View className="operate-item title1" onClick={this.addH1.bind(this)}>
-              <Text>H1</Text>
-            </View>
-            <View className="operate-item title1" onClick={this.addH2.bind(this)}>
-              <Text>H2</Text>
-            </View>
-            <View className="operate-item title1" onClick={this.addH3.bind(this)}>
-              <Text>H3</Text>
-            </View>
-            <View className="operate-item title1" onClick={this.addH4.bind(this)}>
-              <Text>H4</Text>
-            </View>
-            <View className="operate-item title1" onClick={this.addBolder.bind(this)}>
-              <Text>Bolder</Text>
-            </View>
-            <View className="operate-item title1" onClick={this.addQuote.bind(this)}>
-              <Text>Quote</Text>
-            </View>
-          </View>
-          <CommonButton size="full-line" type="primary" onClick={this.getValue.bind(this)}>获取内容</CommonButton>
-        </View>
         <Textarea
           className="editor-text-area"
           cursor={cursor} focus={focus}
           value={value}
+          placeholder="这里输入内容"
           onBlur={this.handleBlur.bind(this)}
           onFocus={this.handleFocus.bind(this)}
           onInput={this.handleInput.bind(this)}
+          maxlength={1000}
         ></Textarea>
       </View>
     )

@@ -30,7 +30,6 @@ function markdownSplit(str:string = '') {
       str = str.slice(2)
     }
     let content = parse(ast(str))
-    console.log(className, item)
     return {
       className,
       content

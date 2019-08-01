@@ -24,7 +24,7 @@ const update = ({id, blog}) => {
   }
 }
 
-const list = blog => db.collection(collection).where(blog).get()
+const list = blog => db.collection(collection).orderBy('update_time', 'desc').where(blog).get()
 
 const detail = _id => db.collection(collection).doc(_id).get()
 

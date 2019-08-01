@@ -39,7 +39,7 @@ class App extends Component {
         iconPath: 'assets/imgs/tab_bar_index.png',
         selectedIconPath: 'assets/imgs/tab_bar_index_select.png'
       }, {
-        text: '刷新',
+        text: '日志',
         pagePath: 'pages/blog/list/index',
         iconPath: 'assets/imgs/tab_bar_blog.png',
         selectedIconPath: 'assets/imgs/tab_bar_blog_select.png'

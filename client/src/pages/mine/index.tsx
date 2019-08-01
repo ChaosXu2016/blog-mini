@@ -44,9 +44,8 @@ class Mine extends Component {
     })
   }
   toLearnList() {
-    Taro.showToast({
-      icon: 'none',
-      title: '正在开发'
+    Taro.navigateTo({
+      url: '/pages/blog/edit/index'
     })
   }
   render() {
