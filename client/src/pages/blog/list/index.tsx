@@ -1,6 +1,9 @@
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import Fab from '@/components/fab'
+import MdReader from '@/components/markdown/reader'
+import CommonButton from '@/components/button'
+import { DateX } from '@/common/date'
 
 import { list, remove } from '@/actions/blog'
 
@@ -14,7 +17,7 @@ interface BlogList {
 
 class BlogList extends Component {
   config: Config = {
-    navigationBarTitleText: '博客列表',
+    navigationBarTitleText: '朝花夕拾',
     enablePullDownRefresh: true
   }
   data = {
@@ -47,6 +50,11 @@ class BlogList extends Component {
       url: '/pages/blog/edit/index'
     })
   }
+  toEdit(id) {
+    Taro.navigateTo({
+      url: `/pages/blog/edit/index?id=${id}`
+    })
+  }
   toDetail(id) {
     Taro.navigateTo({
       url: `/pages/blog/detail/index?id=${id}`
@@ -71,18 +79,22 @@ class BlogList extends Component {
   render() {
     const { listData } = this.state
     return (
-      <View>
+      <View className="list-container">
         {
           listData.map(item => (
-            <View key={item._id} className="event-item touch-able" onClick={() => this.toDetail(item._id)}>
-              <View className="title-view">
-                <Text className="title-text">{item.title}</Text>
+            <View key={item._id} className="daily-item">
+              <View className="daily-header">
+                <View className="daily-dot"></View>
+                <View className="daily-time">{new DateX(item.update_time).format()}</View>
               </View>
-              <View className="sub-title-view">
-                <Text className="sub-title-text">{item.sub_title}</Text>
-              </View>
-              <View className="operate-view">
-                <Text className="can-click-text" onClick={e => { e.stopPropagation(); this.delete(item._id);}}>删除</Text>
+              <View className="daily-body">
+                <View className="md-reader-container">
+                  <MdReader content={item.content}></MdReader>
+                </View>
+                <View className="operate-view">
+                  <CommonButton size="medium" type="text" onClick={() => this.toEdit(item._id)}>编辑</CommonButton>
+                  <CommonButton size="medium" type="text" onClick={() => this.delete(item._id)}>删除</CommonButton>
+                </View>
               </View>
             </View>
           ))

@@ -3,7 +3,6 @@ import Taro from '@tarojs/taro'
 type Blog = {
   readonly _id?: string
   readonly _openid?: string
-  title: string
   sub_title: string
   content: string
   create_time?: Date
@@ -11,7 +10,6 @@ type Blog = {
 }
 
 type BlogQuery = {
-  title?: string
   sub_title?: string
   create_time?: Date
   update_time?: Date

@@ -5,7 +5,8 @@ import insert from '@/common/simplemd/insert'
 
 interface MdEditor {
   props: {
-    onGetValue?: any
+    onGetValue?: any,
+    value: string
   }
   state: {
     value: string
@@ -23,7 +24,15 @@ class MdEditor extends Component {
   lastCursor = 0
   constructor(props) {
     super(props)
+    this.data.value = props.value
     this.state = this.data
+  }
+  componentWillReceiveProps(newProps) {
+    if(newProps.value !== this.props.value) {
+      this.setState({
+        value: newProps.value
+      })
+    }
   }
   getValue() {
     this.props.onGetValue && this.props.onGetValue(this.state.value)

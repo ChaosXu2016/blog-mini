@@ -1,29 +1,61 @@
-.event-item {
-  padding: 30rpx;
-  border-bottom: 1px solid #f4f4f4;
+page {
+  background: #f4f4f4;
+}
+.list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60rpx;
+}
+.daily-item {
+  position: relative;
+  width: 690rpx;
+  border-left: 2rpx solid #3eaf7c;
+  padding: 30rpx 0 60rpx 30rpx;
   box-sizing: border-box;
-  .title-view {
-    font-size: 32rpx;
-    color: #282828;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+  &:last-of-type {
+    border: none;
   }
-  .sub-title-view {
-    margin-top: 20rpx;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+  .daily-header {
+    position: absolute;
+    top: -20rpx;
+    left: -8rpx;
+    display: flex;
+    align-items: center;
+  }
+  .daily-dot {
+    width: 16rpx;
+    height: 16rpx;
+    background: #3eaf7c;
+    border-radius: 50%;
+  }
+  .daily-time {
+    font-size: 32rpx;
+    line-height: 40rpx;
     color: #b4b4b4;
-    font-size: 24rpx;
+    margin-left: 30rpx;
+  }
+  .daily-body {
+    background: #fff;
+    border-radius: 16rpx;
+    box-sizing: border-box;
   }
   .operate-view {
-    margin-top: 20rpx;
-    display: flex;
-    flex-direction: row-reverse;
+    text-align: right;
+    padding: 30rpx;
+    common-button {
+      margin-left: 20rpx;
+    }
   }
-  .can-click-text {
-    font-size: 20rpx;
-    color: #3eaf7c;
+  .title-view {
+    white-space: nowrap;
+    border-bottom: 2rpx solid #eee;
+    color: #282828;
+    font-size: 36rpx;
+    padding-bottom: 30rpx;
+  }
+  .md-reader-container {
+    // max-height: 100rpx;
+    overflow: hidden;
   }
 }

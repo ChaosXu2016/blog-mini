@@ -1,32 +1,58 @@
-import Taro, { Component } from '@tarojs/taro'
-import { View, Input } from '@tarojs/components'
+import Taro, { Component, Config } from '@tarojs/taro'
+import { View } from '@tarojs/components'
 import MdEditor from '@/components/markdown/editor'
-import { textGetter, titleGetter } from '@/common/simplemd/getter'
-import { add } from '@/actions/blog'
+import { textGetter } from '@/common/simplemd/getter'
+import { add, detail, update } from '@/actions/blog'
 
 import './index.less'
 
 interface BlogEdit {
   state: {
-    title: string
+    content: string
   }
 }
 
 class BlogEdit extends Component {
-  data = {
-    title: ''
+  config:Config = {
+    navigationBarTitleText: '慢慢写'
   }
+  data = {
+    content: ''
+  }
+  id = ''
   constructor(props) {
     super(props)
     this.state = this.data
   }
+  componentDidMount() {
+    this.id = this.$router.params.id
+    if(this.id) {
+      this.getDetail(this.id)
+    }
+  }
   handleSubmit(content) {
+    if(!content) return
     const splitContent = textGetter(content)
-    const title = this.state.title || titleGetter(content)
-    return add({
-      title,
-      sub_title: splitContent,
-      content
+    if(this.id) {
+      return update(this.id, {
+        sub_title: splitContent,
+        content
+      })
+    } else {
+      return add({
+        sub_title: splitContent,
+        content
+      })
+    }
+  }
+  getDetail(id) {
+    return detail(id).then((res: any) => {
+      const data = res.result.data
+      if(data) {
+        this.setState({
+          content: data.content
+        })
+      }
     })
   }
   handleInput(e) {
@@ -35,13 +61,9 @@ class BlogEdit extends Component {
     })
   }
   render() {
-    const title = this.state.title || ''
     return (
       <View className="blog-editor">
-        <View className="blog-title">
-          <Input className="blog-title-input" placeholder="请输入标题" value={title} onInput={this.handleInput.bind(this)}></Input>
-        </View>
-        <MdEditor onGetValue={this.handleSubmit.bind(this)}></MdEditor>
+        <MdEditor onGetValue={this.handleSubmit.bind(this)} value={this.state.content}></MdEditor>
       </View>
     )
   }

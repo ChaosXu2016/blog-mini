@@ -44,9 +44,10 @@ class Mine extends Component {
     })
   }
   toLearnList() {
-    Taro.navigateTo({
-      url: '/pages/blog/edit/index'
-    })
+    Taro.showToast({title: '正在开发', icon: 'none'})
+  }
+  toScheduleList() {
+    Taro.showToast({title: '正在开发', icon: 'none'})
   }
   render() {
     const userInfo = this.props.userInfo || {}
@@ -79,7 +80,7 @@ class Mine extends Component {
           </View>
         </View>
         <View className="setting-container">
-          <View className="setting-item touch-able" onClick={this.toSportList.bind(this)}>
+          <View className="setting-item touch-able" onClick={this.toScheduleList.bind(this)}>
             <Image className="setting-icon" src={settingScheduleIcon}></Image>
             <Text className="setting-title">每日计划管理</Text>
             <Image className="right-arrow-icon" src={settingRightArrowIcon}></Image>

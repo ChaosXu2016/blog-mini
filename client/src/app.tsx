@@ -39,12 +39,12 @@ class App extends Component {
         iconPath: 'assets/imgs/tab_bar_index.png',
         selectedIconPath: 'assets/imgs/tab_bar_index_select.png'
       }, {
-        text: '日志',
+        text: '朝花夕拾',
         pagePath: 'pages/blog/list/index',
         iconPath: 'assets/imgs/tab_bar_blog.png',
         selectedIconPath: 'assets/imgs/tab_bar_blog_select.png'
       }, {
-        text: '组件',
+        text: '管理',
         pagePath: 'pages/mine/index',
         iconPath: 'assets/imgs/tab_bar_mine.png',
         selectedIconPath: 'assets/imgs/tab_bar_mine_select.png'

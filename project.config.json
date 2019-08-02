@@ -31,7 +31,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 5,
+			"current": 6,
 			"list": [
 				{
 					"id": -1,
@@ -72,6 +72,13 @@
 					"id": -1,
 					"name": "pages/blog/detail/index",
 					"pathName": "pages/blog/detail/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "blog-list",
+					"pathName": "pages/blog/list/index",
 					"scene": null
 				}
 			]
