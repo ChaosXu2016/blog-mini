@@ -1,4 +1,3 @@
-import parse from './parse'
 import ast from './ast'
 
 function markdownSplit(str:string = '') {
@@ -29,7 +28,7 @@ function markdownSplit(str:string = '') {
       className = 'quote-block'
       str = str.slice(2)
     }
-    let content = parse(ast(str))
+    let content = ast(str)
     return {
       className,
       content
