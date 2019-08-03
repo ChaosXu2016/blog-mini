@@ -1,1 +1,2 @@
 export const WECHAT_USERINFO_SET = 'WECHAT_USERINFO_SET'
+export const OPEN_ID_SET = 'OPEN_ID_SET'

@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import counter from './counter'
+import openId from './openId'
 import userInfo from './userInfo'
 
 export default combineReducers({
-  counter,
+  openId,
   userInfo
 })

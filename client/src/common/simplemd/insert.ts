@@ -60,5 +60,13 @@ export default {
       value: splitStr.join(''),
       cursor: cursor + 2
     }
+  },
+  image(str: string, cursor: number, id: string) {
+    const splitStr = str.split('')
+    splitStr.splice(cursor, 0, `![image](${id})`)
+    return {
+      value: splitStr.join(''),
+      cursor: cursor + 9
+    }
   }
 }

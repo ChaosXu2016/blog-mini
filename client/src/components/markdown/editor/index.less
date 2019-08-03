@@ -17,3 +17,24 @@
   box-sizing: border-box;
   line-height: 1.2;
 }
+.fab-button {
+  position: fixed;
+  bottom: 400rpx;
+  right: 60rpx;
+  height: 100rpx;
+  width: 100rpx;
+  border-radius: 50%;
+  box-shadow: 0 0 4rpx 4rpx rgba(0, 0, 0, .2);
+  font-size: 0;
+  background: #3eaf7c;
+  overflow: hidden;
+  z-index: 999;
+  &:active {
+    opacity: .6;
+  }
+  .fab-icon {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+}

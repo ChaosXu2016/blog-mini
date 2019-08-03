@@ -1,8 +1,9 @@
 import Taro,{ Component } from '@tarojs/taro'
-import { View, Text, Image } from '@tarojs/components'
+import { View, Text } from '@tarojs/components'
 import split from '@/common/simplemd/split'
 import './index.less'
-import styles from '@/common/simplemd/styles';
+import styles from '@/common/simplemd/styles'
+import CommonImage from '@/components/image'
 
 interface MdReader {
   props: {
@@ -14,7 +15,6 @@ class MdReader extends Component {
   render() {
     const { content } = this.props
     const splits = split(content)
-    console.log(splits)
     return (
       <View className="simple-md-reader">
         {
@@ -25,7 +25,7 @@ class MdReader extends Component {
                   if(contentItem.style === styles.IMAGE) {
                     return (
                       <View className={`md-block-view ${contentItem.style || ''}`} key={`${contentIndex}_${Date.now()}`}>
-                        <Image src={contentItem.src} mode="aspectFit"></Image>
+                        <CommonImage src={contentItem.src} mode="aspectFit"></CommonImage>
                       </View>
                     )
                   }

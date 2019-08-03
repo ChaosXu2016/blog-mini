@@ -8,6 +8,7 @@ import store from './store'
 
 import './app.less'
 import { setUserInfo } from './actions/userInfo'
+import { openIdSet } from './actions/openId'
 
 Taro.cloud.init()
 
@@ -59,8 +60,8 @@ class App extends Component {
     Taro.login().then(() => {
       Taro.cloud.callFunction({
         name: 'login',
-        complete: res => {
-          console.log(res)
+        complete: (res: any) => {
+          store.dispatch(openIdSet(res.result.openid) as any)
         }
       })
     })

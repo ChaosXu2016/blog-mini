@@ -3,16 +3,18 @@ import { View, Image } from '@tarojs/components'
 import './index.less'
 import addIcon from '@/assets/imgs/fab/add.png'
 import deleteIcon from '@/assets/imgs/fab/delete.png'
+import imageIcon from '@/assets/imgs/fab/imgs-exclusive.png'
 
 const iconMap = {
   add: addIcon,
-  delete: deleteIcon
+  delete: deleteIcon,
+  image: imageIcon
 }
 
 interface FabButton {
   props: {
     onClick?: any
-    icon: 'add' | 'delete' | string
+    icon: 'add' | 'delete' | 'image' | string
   }
 }
 

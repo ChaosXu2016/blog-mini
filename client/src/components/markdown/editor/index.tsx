@@ -1,12 +1,16 @@
 import Taro,{ Component } from '@tarojs/taro'
-import { View, Textarea } from '@tarojs/components'
+import { View, Textarea, CoverView, CoverImage } from '@tarojs/components'
 import './index.less'
 import insert from '@/common/simplemd/insert'
+import imageIcon from '@/assets/imgs/fab/imgs-exclusive.png'
+import { connect } from '@tarojs/redux'
+import store from '@/store'
 
 interface MdEditor {
   props: {
     onGetValue?: any,
-    value: string
+    value: string,
+    openId: any
   }
   state: {
     value: string
@@ -15,7 +19,11 @@ interface MdEditor {
   }
 }
 
+@connect(({ openId }) => ({ openId }), () => ({}))
 class MdEditor extends Component {
+  static defaultProps = {
+    openId: store.getState().openId
+  }
   data = {
     value: '',
     cursor: -1,
@@ -55,9 +63,9 @@ class MdEditor extends Component {
   addQuote() {
     return this.add(insert.quote)
   }
-  add(fn) {
+  add(fn, args?: any) {
     setTimeout(() => {
-      const { value, cursor } = fn(this.state.value, this.lastCursor)
+      const { value, cursor } = fn(this.state.value, this.lastCursor, args)
       this.setState({
         value: value, 
         cursor
@@ -87,6 +95,24 @@ class MdEditor extends Component {
   componentWillUnmount() {
     this.getValue()
   }
+  insertImage() {
+    Taro.chooseImage({
+      count: 1,
+      success: res => {
+        const filePath = res.tempFilePaths[0] || ''
+        if(filePath) {
+          const imgId = filePath.replace(/(.*?)(?=(\w*\.\w*)$)/, '')
+          Taro.cloud.uploadFile({
+            cloudPath: `markdown.image.${this.props.openId}.${imgId}`,
+            filePath: res.tempFilePaths[0],
+            success: res => {
+              return this.add(insert.image, res.fileID)
+            }
+          })
+        }
+      }
+    })
+  }
   render() {
     const { value, cursor, focus } = this.state
     return (
@@ -101,6 +127,9 @@ class MdEditor extends Component {
           onInput={this.handleInput.bind(this)}
           maxlength={1000}
         ></Textarea>
+        <CoverView className="fab-button" onClick={this.insertImage.bind(this)}>
+          <CoverImage src={imageIcon} className="fab-icon"></CoverImage>
+        </CoverView>
       </View>
     )
   }
