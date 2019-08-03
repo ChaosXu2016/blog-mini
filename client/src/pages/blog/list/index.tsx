@@ -15,6 +15,15 @@ interface BlogList {
   }
 }
 
+const demo = {
+  "content": "这是一个简化版的`markdown`编辑器\n因为实在设计不好页面，再加上小程序的`textarea`的限制，所以没有做快捷选项。\n可以支持的功能如下：\n# 标题一\n## 标题二\n### 标题三\n#### 标题四\n> 引用文本\n普通文本的**加粗**，还有`code`（没有做关键词高亮等解析）。\n\n键盘上点击完成时保存输入内容。",
+  "create_time": "2019-08-01T06:16:53.387Z",
+  "openid": "op0YM0ZEDSQpnXp_zC4kAVydTKzI",
+  "sub_title": "这是一个简化版的markdown编辑器因为实在设计不好页面，再加上小程序的textarea的限制，所以没有做快捷选项。可以支持的功能如下：标题一标题二标题三标题四引用文本普通文本的加粗，还有code（没有做关键词高亮等解析）。键盘上点击完成时保存输入内容。",
+  "title": "这是一个简化版的markdown编辑器",
+  "update_time": "2019-08-02T12:51:37.003Z"
+}
+
 class BlogList extends Component {
   config: Config = {
     navigationBarTitleText: '朝花夕拾',
@@ -40,9 +49,15 @@ class BlogList extends Component {
   }
   getBlogList() {
     return list({}).then((res: any) => {
-      this.setState({
-        listData: res.result.data
-      })
+      if(!res.result.data.length) {
+        this.setState({
+          listData: [demo]
+        })
+      } else {
+        this.setState({
+          listData: res.result.data
+        })
+      }
     })
   }
   toBlogAdd() {
@@ -91,10 +106,14 @@ class BlogList extends Component {
                 <View className="md-reader-container">
                   <MdReader content={item.content}></MdReader>
                 </View>
-                <View className="operate-view">
-                  <CommonButton size="medium" type="text" onClick={() => this.toEdit(item._id)}>编辑</CommonButton>
-                  <CommonButton size="medium" type="text" onClick={() => this.delete(item._id)}>删除</CommonButton>
-                </View>
+                {
+                  item._id ? (
+                    <View className="operate-view">
+                      <CommonButton size="medium" type="text" onClick={() => this.toEdit(item._id)}>编辑</CommonButton>
+                      <CommonButton size="medium" type="text" onClick={() => this.delete(item._id)}>删除</CommonButton>
+                    </View>
+                  ) : null
+                }
               </View>
             </View>
           ))
