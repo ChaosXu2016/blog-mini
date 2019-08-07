@@ -30,20 +30,21 @@ class BlogEdit extends Component {
       this.getDetail(this.id)
     }
   }
-  handleSubmit(content) {
+  async handleSubmit(content) {
     if(!content) return
     const splitContent = textGetter(content)
     if(this.id) {
-      return update(this.id, {
+      await update(this.id, {
         sub_title: splitContent,
         content
       })
     } else {
-      return add({
+      await add({
         sub_title: splitContent,
         content
       })
     }
+    return Taro.navigateBack()
   }
   getDetail(id) {
     return detail(id).then((res: any) => {

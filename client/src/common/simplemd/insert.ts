@@ -61,6 +61,14 @@ export default {
       cursor: cursor + 2
     }
   },
+  code(str: string, cursor: number) {
+    const splitStr = str.split('')
+    splitStr.splice(cursor, 0, '``')
+    return {
+      value: splitStr.join(''),
+      cursor: cursor + 1
+    }
+  },
   image(str: string, cursor: number, id: string) {
     const splitStr = str.split('')
     splitStr.splice(cursor, 0, `![image](${id})`)
