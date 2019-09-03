@@ -3,7 +3,7 @@ import { View } from '@tarojs/components'
 import Fab from '@/components/fab'
 import MdReader from '@/components/markdown/reader'
 import CommonButton from '@/components/button'
-import { DateX } from '@/common/date'
+import { CDate } from 'chaos-fe-utils'
 
 import { list, remove } from '@/actions/blog'
 
@@ -100,7 +100,7 @@ class BlogList extends Component {
             <View key={item._id} className="daily-item">
               <View className="daily-header">
                 <View className="daily-dot"></View>
-                <View className="daily-time">{new DateX(item.update_time).format()}</View>
+                <View className="daily-time">{new CDate(item.update_time).format()}</View>
               </View>
               <View className="daily-body">
                 <View className="md-reader-container">
